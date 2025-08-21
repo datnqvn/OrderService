@@ -16,8 +16,8 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore OrderService.sln
     - name: Build
-      run: dotnet build --no-restore --configuration Release
+      run: dotnet build OrderService.sln --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test OrderService.sln --no-build --verbosity normal
