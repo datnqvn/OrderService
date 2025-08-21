@@ -7,39 +7,51 @@ namespace LegacyOrderService
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Order Processor!");
-            Console.WriteLine("Enter customer name:");
-            string name = Console.ReadLine();
+            try
+            {
+                Console.WriteLine("Welcome to Order Processor!");
+                Console.WriteLine("Enter customer name:");
+                string name = Console.ReadLine();
 
-            Console.WriteLine("Enter product name:");
-            string product = Console.ReadLine();
-            var productRepo = new ProductRepository();
-            double price = productRepo.GetPrice(product);
+                Console.WriteLine("Enter product name:");
+                string product = Console.ReadLine();
+                var productRepo = new ProductRepository();
+                double price = productRepo.GetPrice(product);
 
+                Console.WriteLine("Enter quantity:");
+                int qty = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Enter quantity:");
-            int qty = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Processing order...");
 
-            Console.WriteLine("Processing order...");
+                Order order = new Order();
+                order.CustomerName = name;
+                order.ProductName = product;
+                order.Quantity = qty;
+                order.Price = price;
 
-            Order order = new Order();
-            order.CustomerName = name;
-            order.ProductName = product;
-            order.Quantity = qty;
-            order.Price = price;
+                double total = order.Quantity * order.Price;
 
-            double total = order.Quantity * order.Price;
+                Console.WriteLine("Order complete!");
+                Console.WriteLine("Customer: " + order.CustomerName);
+                Console.WriteLine("Product: " + order.ProductName);
+                Console.WriteLine("Quantity: " + order.Quantity);
+                Console.WriteLine("Total: $" + total);
 
-            Console.WriteLine("Order complete!");
-            Console.WriteLine("Customer: " + order.CustomerName);
-            Console.WriteLine("Product: " + order.ProductName);
-            Console.WriteLine("Quantity: " + order.Quantity);
-            Console.WriteLine("Total: $" + total);
-
-            Console.WriteLine("Saving order to database...");
-            var repo = new OrderRepository();
-            repo.Save(order);
-            Console.WriteLine("Done.");
+                Console.WriteLine("Saving order to database...");
+                var repo = new OrderRepository();
+                repo.Save(order);
+                Console.WriteLine("Done.");
+            }
+            catch(KeyNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("The product you entered does not exist. Please check the product name and try again.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
         }
     }
 }

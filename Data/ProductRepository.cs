@@ -1,9 +1,4 @@
-﻿// Data/ProductRepository.cs
-using System;
-using System.Collections.Generic;
-using System.Threading;
-
-namespace LegacyOrderService.Data
+﻿namespace LegacyOrderService.Data
 {
     public class ProductRepository
     {
@@ -22,7 +17,7 @@ namespace LegacyOrderService.Data
             if (_productPrices.TryGetValue(productName, out var price))
                 return price;
 
-            throw new Exception("Product not found");
+            throw new KeyNotFoundException($"Product '{productName}' not found");
         }
     }
 }
