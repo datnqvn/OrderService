@@ -3,13 +3,13 @@ using LegacyOrderService.Models;
 
 public sealed class App
 {
-    private readonly IOrderRepository orderRepo;
-    private readonly IProductRepository productRepo;
+    private readonly IOrderRepository _orderRepo;
+    private readonly IProductRepository _productRepo;
 
     public App(IOrderRepository orderRepo, IProductRepository productRepo)
     {
-        this.orderRepo = orderRepo;
-        this.productRepo = productRepo;
+        _orderRepo = orderRepo;
+        _productRepo = productRepo;
     }
 
     public async Task RunAsync(string[] args, CancellationToken ct = default)
@@ -45,7 +45,7 @@ public sealed class App
                 }
                 try
                 {
-                    price = productRepo.GetPrice(product);
+                    price = _productRepo.GetPrice(product);
                     break;
                 }
                 catch (KeyNotFoundException)
@@ -88,7 +88,7 @@ public sealed class App
             Console.WriteLine("Total: $" + total);
 
             Console.WriteLine("Saving order to database...");
-            orderRepo.Save(order);
+            _orderRepo.Save(order);
             Console.WriteLine("Done.");
         }
         catch (Exception ex)
