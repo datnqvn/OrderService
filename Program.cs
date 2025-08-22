@@ -13,25 +13,57 @@ var orderRepo = serviceProvider.GetRequiredService<IOrderRepository>();
 try
 {
     Console.WriteLine("Welcome to Order Processor!");
-    Console.WriteLine("Enter customer name:");
-    string? name = Console.ReadLine();
-    if (string.IsNullOrWhiteSpace(name))
+    string? name = null;
+    while (true)
     {
-        Console.WriteLine("Customer name cannot be empty.");
-        return;
+        Console.WriteLine("Enter customer name:");
+        name = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            Console.WriteLine("Customer name cannot be empty. Please try again.");
+        }
+        else
+        {
+            break;
+        }
     }
 
-    Console.WriteLine("Enter product name:");
-    string? product = Console.ReadLine();
-    if (string.IsNullOrWhiteSpace(product))
+    string? product = null;
+    double price = 0;
+    while (true)
     {
-        Console.WriteLine("Product name cannot be empty.");
-        return;
+        Console.WriteLine("Enter product name:");
+        product = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(product))
+        {
+            Console.WriteLine("Product name cannot be empty. Please try again.");
+            continue;
+        }
+        try
+        {
+            price = productRepo.GetPrice(product);
+            break;
+        }
+        catch (KeyNotFoundException)
+        {
+            Console.WriteLine("The product you entered does not exist. Please check the product name and try again.");
+        }
     }
-    double price = productRepo.GetPrice(product);
 
-    Console.WriteLine("Enter quantity:");
-    int qty = Convert.ToInt32(Console.ReadLine());
+    int qty = 0;
+    while (true)
+    {
+        Console.WriteLine("Enter quantity:");
+        string? qtyInput = Console.ReadLine();
+        if (!int.TryParse(qtyInput, out qty) || qty <= 0)
+        {
+            Console.WriteLine("Quantity must be a positive integer. Please try again.");
+        }
+        else
+        {
+            break;
+        }
+    }
 
     Console.WriteLine("Processing order...");
 
@@ -54,11 +86,6 @@ try
     Console.WriteLine("Saving order to database...");
     orderRepo.Save(order);
     Console.WriteLine("Done.");
-}
-catch (KeyNotFoundException ex)
-{
-    Console.WriteLine(ex.Message);
-    Console.WriteLine("The product you entered does not exist. Please check the product name and try again.");
 }
 catch (Exception ex)
 {
