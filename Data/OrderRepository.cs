@@ -1,24 +1,44 @@
-using Microsoft.Data.Sqlite;
 using LegacyOrderService.Models;
 
 namespace LegacyOrderService.Data
 {
     public class OrderRepository : IOrderRepository
     {
-        private string _connectionString = $"Data Source={Path.Combine(AppContext.BaseDirectory, "orders.db")}";
+        private readonly IDbConnectionFactory _connectionFactory;
+
+        public OrderRepository(IDbConnectionFactory connectionFactory)
+        {
+            _connectionFactory = connectionFactory;
+        }
         public void Save(Order order)
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            using (var connection = _connectionFactory.CreateConnection())
             {
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
                     command.CommandText = @"INSERT INTO Orders (CustomerName, ProductName, Quantity, Price)
                         VALUES (@CustomerName, @ProductName, @Quantity, @Price)";
-                    command.Parameters.AddWithValue("@CustomerName", order.CustomerName);
-                    command.Parameters.AddWithValue("@ProductName", order.ProductName);
-                    command.Parameters.AddWithValue("@Quantity", order.Quantity);
-                    command.Parameters.AddWithValue("@Price", order.Price);
+                    var param = command.CreateParameter();
+                    param.ParameterName = "@CustomerName";
+                    param.Value = order.CustomerName;
+                    command.Parameters.Add(param);
+
+                    param = command.CreateParameter();
+                    param.ParameterName = "@ProductName";
+                    param.Value = order.ProductName;
+                    command.Parameters.Add(param);
+
+                    param = command.CreateParameter();
+                    param.ParameterName = "@Quantity";
+                    param.Value = order.Quantity;
+                    command.Parameters.Add(param);
+
+                    param = command.CreateParameter();
+                    param.ParameterName = "@Price";
+                    param.Value = order.Price;
+                    command.Parameters.Add(param);
+
                     command.ExecuteNonQuery();
                 }
             }
@@ -26,7 +46,7 @@ namespace LegacyOrderService.Data
 
         public void SeedBadData()
         {
-            using (var connection = new SqliteConnection(_connectionString))
+            using (var connection = _connectionFactory.CreateConnection())
             {
                 connection.Open();
                 using (var cmd = connection.CreateCommand())
