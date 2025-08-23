@@ -1,31 +1,35 @@
+
 using LegacyOrderService.Application;
 using LegacyOrderService.Models;
+using Microsoft.Extensions.Logging;
+
 
 public sealed class App
 {
     private readonly IOrderService _orderService;
+    private readonly ILogger<App> _logger;
 
-    public App(IOrderService orderService)
+    public App(IOrderService orderService, ILogger<App> logger)
     {
         _orderService = orderService;
+        _logger = logger;
     }
 
     public void Run(string[] args)
     {
         try
         {
-            Console.WriteLine("Welcome to Order Processor!");
+            _logger.LogInformation("Welcome to Order Processor!");
             var order = ProcessOrderInput();
             double total = _orderService.CalculateTotal(order);
             DisplayOrderSummary(order, total);
-            Console.WriteLine("Saving order to database...");
+            _logger.LogInformation("Saving order to database...");
             _orderService.SaveOrder(order);
-            Console.WriteLine("Done.");
+            _logger.LogInformation("Done.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-            Console.WriteLine(ex.StackTrace);
+            _logger.LogError(ex, "An unexpected error occurred: {Message}", ex.Message);
         }
     }
 
@@ -45,13 +49,13 @@ public sealed class App
             }
             catch (KeyNotFoundException)
             {
-                Console.WriteLine("The product you entered does not exist. Please check the product name and try again.");
+                _logger.LogWarning("The product you entered does not exist. Please check the product name and try again.");
             }
         }
 
         int qty = PromptPositiveInt("Enter quantity:", "Quantity must be a positive integer. Please try again.");
 
-        Console.WriteLine("Processing order...");
+        _logger.LogInformation("Processing order...");
 
         return new Order
         {
@@ -64,22 +68,22 @@ public sealed class App
 
     private void DisplayOrderSummary(Order order, double total)
     {
-        Console.WriteLine("Order complete!");
-        Console.WriteLine($"Customer: {order.CustomerName}");
-        Console.WriteLine($"Product: {order.ProductName}");
-        Console.WriteLine($"Quantity: {order.Quantity}");
-        Console.WriteLine($"Total: ${total}");
+        _logger.LogInformation("Order complete!");
+        _logger.LogInformation("Customer: {CustomerName}", order.CustomerName);
+        _logger.LogInformation("Product: {ProductName}", order.ProductName);
+        _logger.LogInformation("Quantity: {Quantity}", order.Quantity);
+        _logger.LogInformation("Total: ${Total}", total);
     }
 
     private string PromptNonEmptyString(string prompt, string errorMessage)
     {
         while (true)
         {
-            Console.WriteLine(prompt);
+            _logger.LogInformation(prompt);
             var input = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(input))
                 return input;
-            Console.WriteLine(errorMessage);
+            _logger.LogWarning(errorMessage);
         }
     }
 
@@ -87,11 +91,11 @@ public sealed class App
     {
         while (true)
         {
-            Console.WriteLine(prompt);
+            _logger.LogInformation(prompt);
             var input = Console.ReadLine();
             if (int.TryParse(input, out int value) && value > 0)
                 return value;
-            Console.WriteLine(errorMessage);
+            _logger.LogWarning(errorMessage);
         }
     }
 }
