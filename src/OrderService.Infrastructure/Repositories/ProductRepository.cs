@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
+using Microsoft.Extensions.Options;
 using OrderService.Domain.Interfaces;
 
 namespace OrderService.Infrastructure.Repositories
@@ -11,8 +12,9 @@ namespace OrderService.Infrastructure.Repositories
     {
         private readonly Dictionary<string, double> _productPrices;
 
-        public ProductRepository(string jsonFilePath)
+        public ProductRepository(IOptions<ProductRepositoryOptions> options)
         {
+            var jsonFilePath = options.Value.ProductDataFile;
             if (!File.Exists(jsonFilePath))
                 throw new FileNotFoundException($"Product data file not found: {jsonFilePath}");
 
