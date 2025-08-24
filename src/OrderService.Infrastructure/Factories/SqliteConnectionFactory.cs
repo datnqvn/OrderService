@@ -1,8 +1,14 @@
-using Microsoft.Data.Sqlite;
+using System;
 using System.Data;
+using Microsoft.Data.Sqlite;
 
-namespace LegacyOrderService.Data
+namespace OrderService.Infrastructure.Factories
 {
+    public interface IDbConnectionFactory
+    {
+        IDbConnection CreateConnection();
+    }
+
     public class SqliteConnectionFactory : IDbConnectionFactory
     {
         private readonly string _connectionString;
