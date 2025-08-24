@@ -45,21 +45,5 @@ namespace OrderService.Infrastructure.Repositories
                 }
             }
         }
-
-        public void SeedBadData()
-        {
-            using (var connection = _connectionFactory.CreateConnection())
-            {
-                connection.Open();
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = @"INSERT INTO Orders (CustomerName, ProductName, Quantity, Price) VALUES
-                        ('', '', -1, -100),
-                        (NULL, NULL, 0, 0),
-                        ('BadName', 'BadProduct', 999999, 999999.99)";
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
     }
 }
