@@ -15,9 +15,11 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
+    - name: Clean
+      run: dotnet clean OrderService.sln
     - name: Restore dependencies
       run: dotnet restore OrderService.sln
     - name: Build
-      run: dotnet build OrderService.sln --no-restore --configuration Release
+      run: dotnet build OrderService.sln --no-restore --configuration Debug
     - name: Test
-      run: dotnet test OrderService.sln --no-build --verbosity normal
+      run: dotnet test OrderService.sln --no-build --configuration Debug --verbosity normal
