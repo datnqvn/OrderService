@@ -1,20 +1,24 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Domain", "src/OrderService.Domain/OrderService.Domain.csproj", "{A1A1A1A1-0000-0000-0000-000000000001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Domain", "src\OrderService.Domain\OrderService.Domain.csproj", "{A1A1A1A1-0000-0000-0000-000000000001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Application", "src/OrderService.Application/OrderService.Application.csproj", "{A1A1A1A1-0000-0000-0000-000000000002}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Application", "src\OrderService.Application\OrderService.Application.csproj", "{A1A1A1A1-0000-0000-0000-000000000002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Infrastructure", "src/OrderService.Infrastructure/OrderService.Infrastructure.csproj", "{A1A1A1A1-0000-0000-0000-000000000003}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Infrastructure", "src\OrderService.Infrastructure\OrderService.Infrastructure.csproj", "{A1A1A1A1-0000-0000-0000-000000000003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Presentation", "src/OrderService.Presentation/OrderService.Presentation.csproj", "{A1A1A1A1-0000-0000-0000-000000000004}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Presentation", "src\OrderService.Presentation\OrderService.Presentation.csproj", "{A1A1A1A1-0000-0000-0000-000000000004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Application.Tests", "tests/OrderService.Application.Tests/OrderService.Application.Tests.csproj", "{A1A1A1A1-0000-0000-0000-000000000005}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Application.Tests", "tests\OrderService.Application.Tests\OrderService.Application.Tests.csproj", "{A1A1A1A1-0000-0000-0000-000000000005}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Domain.Tests", "tests/OrderService.Domain.Tests/OrderService.Domain.Tests.csproj", "{A1A1A1A1-0000-0000-0000-000000000006}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Domain.Tests", "tests\OrderService.Domain.Tests\OrderService.Domain.Tests.csproj", "{A1A1A1A1-0000-0000-0000-000000000006}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Infrastructure.Tests", "tests/OrderService.Infrastructure.Tests/OrderService.Infrastructure.Tests.csproj", "{A1A1A1A1-0000-0000-0000-000000000007}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Infrastructure.Tests", "tests\OrderService.Infrastructure.Tests\OrderService.Infrastructure.Tests.csproj", "{A1A1A1A1-0000-0000-0000-000000000007}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4B1FDD79-1ECA-443B-89A2-EFA84860F893}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Presentation.Tests", "tests\OrderService.Presentation.Tests\OrderService.Presentation.Tests.csproj", "{9105BBDE-6D33-496A-895A-CEFFB8FC8987}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,11 +40,18 @@ Global
 		{A1A1A1A1-0000-0000-0000-000000000006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1A1A1A1-0000-0000-0000-000000000007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1A1A1A1-0000-0000-0000-000000000007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9105BBDE-6D33-496A-895A-CEFFB8FC8987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9105BBDE-6D33-496A-895A-CEFFB8FC8987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9105BBDE-6D33-496A-895A-CEFFB8FC8987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9105BBDE-6D33-496A-895A-CEFFB8FC8987}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {958EA6F6-18DD-4F66-A248-50E795E131D1}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9105BBDE-6D33-496A-895A-CEFFB8FC8987} = {4B1FDD79-1ECA-443B-89A2-EFA84860F893}
 	EndGlobalSection
 EndGlobal

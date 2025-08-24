@@ -69,12 +69,12 @@ namespace OrderService.Presentation
 
         private void DisplayOrderSummary(Order order, double total)
         {
-            Console.WriteLine("\nOrder Summary:");
-            Console.WriteLine($"Customer: {order.CustomerName}");
-            Console.WriteLine($"Product: {order.ProductName}");
-            Console.WriteLine($"Quantity: {order.Quantity}");
-            Console.WriteLine($"Price: {order.Price:C}");
-            Console.WriteLine($"Total: {total:C}");
+            _logger.LogInformation("\nOrder Summary:");
+            _logger.LogInformation("Customer: {CustomerName}", order.CustomerName);
+            _logger.LogInformation("Product: {ProductName}", order.ProductName);
+            _logger.LogInformation("Quantity: {Quantity}", order.Quantity);
+            _logger.LogInformation("Price: {Price}", order.Price.ToString("C"));
+            _logger.LogInformation("Total: {Total}", total.ToString("C"));
         }
 
         private string PromptNonEmptyString(string prompt, string errorMsg)
@@ -85,7 +85,7 @@ namespace OrderService.Presentation
                 var input = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(input))
                     return input;
-                Console.WriteLine(errorMsg);
+                _logger.LogWarning(errorMsg);
             }
         }
 
@@ -96,7 +96,7 @@ namespace OrderService.Presentation
                 Console.Write(prompt + " ");
                 if (int.TryParse(Console.ReadLine(), out int value) && value > 0)
                     return value;
-                Console.WriteLine(errorMsg);
+                _logger.LogWarning(errorMsg);
             }
         }
     }
