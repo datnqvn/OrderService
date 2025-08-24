@@ -1,4 +1,4 @@
-namespace LegacyOrderService.Models
+namespace OrderService.Domain.Models
 {
     public class Order
     {

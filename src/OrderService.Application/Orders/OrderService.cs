@@ -1,7 +1,7 @@
-using LegacyOrderService.Models;
-using LegacyOrderService.Data;
+using OrderService.Domain.Interfaces;
+using OrderService.Domain.Models;
 
-namespace LegacyOrderService.Application
+namespace OrderService.Application.Orders
 {
     public class OrderService : IOrderService
     {

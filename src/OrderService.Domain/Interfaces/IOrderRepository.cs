@@ -1,6 +1,6 @@
-using LegacyOrderService.Models;
+using OrderService.Domain.Models;
 
-namespace LegacyOrderService.Data
+namespace OrderService.Domain.Interfaces
 {
     public interface IOrderRepository
     {

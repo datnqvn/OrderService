@@ -1,10 +1,12 @@
-using LegacyOrderService.Models;
+using OrderService.Domain.Interfaces;
+using OrderService.Domain.Models;
+using OrderService.Infrastructure.Factories;
 
-namespace LegacyOrderService.Data
+namespace OrderService.Infrastructure.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly IDbConnectionFactory _connectionFactory;
+    private readonly IDbConnectionFactory _connectionFactory;
 
         public OrderRepository(IDbConnectionFactory connectionFactory)
         {
@@ -49,10 +51,13 @@ namespace LegacyOrderService.Data
             using (var connection = _connectionFactory.CreateConnection())
             {
                 connection.Open();
-                using (var cmd = connection.CreateCommand())
+                using (var command = connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO Orders (CustomerName, ProductName, Quantity, Price) VALUES ('John', 'Widget', 9999, 9.99)";
-                    cmd.ExecuteNonQuery();
+                    command.CommandText = @"INSERT INTO Orders (CustomerName, ProductName, Quantity, Price) VALUES
+                        ('', '', -1, -100),
+                        (NULL, NULL, 0, 0),
+                        ('BadName', 'BadProduct', 999999, 999999.99)";
+                    command.ExecuteNonQuery();
                 }
             }
         }
