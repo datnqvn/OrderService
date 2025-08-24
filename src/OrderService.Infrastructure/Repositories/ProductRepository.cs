@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using OrderService.Domain.Interfaces;
 
@@ -6,12 +9,17 @@ namespace OrderService.Infrastructure.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly Dictionary<string, double> _productPrices = new()
+        private readonly Dictionary<string, double> _productPrices;
+
+        public ProductRepository(string jsonFilePath)
         {
-            ["Widget"] = 12.99,
-            ["Gadget"] = 15.49,
-            ["Doohickey"] = 8.75
-        };
+            if (!File.Exists(jsonFilePath))
+                throw new FileNotFoundException($"Product data file not found: {jsonFilePath}");
+
+            var json = File.ReadAllText(jsonFilePath);
+            _productPrices = JsonSerializer.Deserialize<Dictionary<string, double>>(json)
+                ?? new Dictionary<string, double>();
+        }
 
         public double GetPrice(string productName)
         {

@@ -25,7 +25,8 @@ namespace OrderService.Presentation
                     var connectionString = ctx.Configuration.GetConnectionString("Default");
                     services.AddSingleton<IDbConnectionFactory>(new SqliteConnectionFactory(connectionString));
                     services.AddScoped<IOrderRepository, OrderRepository>();
-                    services.AddScoped<IProductRepository, ProductRepository>();
+                    var productDataFile = ctx.Configuration["ProductDataFile"] ?? "src/OrderService.Presentation/products.json";
+                    services.AddScoped<IProductRepository>(sp => new ProductRepository(productDataFile));
                     services.AddScoped<IOrderService, Application.Orders.OrderService>();
                     services.AddScoped<App>();
                 })
